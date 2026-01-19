@@ -1,55 +1,72 @@
-# LiaScript + CodeMirror (Working in Player)
+<!--
+author: Your Name
+title: LiaScript + CodeMirror Demo
+version: 1.0.0
+language: en
 
-Below is a live CodeMirror editor.  
-Type your code and click **Run** to see the output.
+@CodeMirrorJS
+<div id="editor-@0"></div>
+<button id="runBtn-@0">Run</button>
+<pre id="output-@0"></pre>
 
-```html
-<div id="editor"></div>
-<button id="runBtn">Run</button>
-<pre id="output"></pre>
+<script type="module">
+  import { EditorView, basicSetup } from "https://esm.sh/@codemirror/basic-setup";
+  import { EditorState } from "https://esm.sh/@codemirror/state";
+  import { javascript } from "https://esm.sh/@codemirror/lang-javascript";
 
-<!-- Load CodeMirror 5 (bundled JS/CSS) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.css">
-<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/javascript/javascript.js"></script>
+  const parent = document.getElementById("editor-@0");
+  const runBtn = document.getElementById("runBtn-@0");
+  const output = document.getElementById("output-@0");
+
+  const startState = EditorState.create({
+    doc: `console.log("Hello LiaScript + CodeMirror!");`,
+    extensions: [basicSetup, javascript()]
+  });
+
+  const view = new EditorView({
+    state: startState,
+    parent
+  });
+
+  runBtn.addEventListener("click", () => {
+    const code = view.state.doc.toString();
+
+    // Capture console.log
+    const logs = [];
+    const origLog = console.log;
+    console.log = (...args) => logs.push(args.join(" "));
+
+    try {
+      const result = (0, eval)(code); // run code
+      const resultText = result !== undefined ? String(result) + "\n" : "";
+      output.textContent =
+        resultText + (logs.length ? logs.join("\n") + "\n" : "") + "(Executed)";
+    } catch (err) {
+      output.textContent = "Error: " + err.message;
+    } finally {
+      console.log = origLog;
+    }
+  });
+</script>
 
 <style>
-  #editor {
+  #editor-@0 {
     border: 1px solid #ccc;
     font-size: 14px;
     height: 200px;
     margin-bottom: 10px;
   }
-  #runBtn {
+  #runBtn-@0 {
     padding: 5px 10px;
     margin-bottom: 10px;
   }
-  #output {
+  #output-@0 {
     background: #f4f4f4;
     padding: 10px;
     border: 1px solid #ccc;
     min-height: 50px;
+    white-space: pre-wrap;
   }
 </style>
-
-<script>
-  // Delay to ensure LiaScript has inserted the HTML
-  setTimeout(() => {
-    const editor = CodeMirror(document.getElementById("editor"), {
-      value: 'console.log("Hello LiaScript + CodeMirror!");',
-      mode: "javascript",
-      lineNumbers: true
-    });
-
-    document.getElementById("runBtn").addEventListener("click", () => {
-      const code = editor.getValue();
-      try {
-        const result = eval(code);
-        document.getElementById("output").textContent =
-          (result !== undefined ? result : "") + "\n(See console for logs)";
-      } catch (err) {
-        document.getElementById("output").textContent = "Error: " + err.message;
-      }
-    });
-  }, 500);
-</script>
+@end
+-->
