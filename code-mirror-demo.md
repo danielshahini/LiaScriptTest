@@ -1,54 +1,14 @@
-<!--
-author: Your Name
-title: LiaScript + CodeMirror Demo
-version: 1.0.0
-language: en
--->
-
-# LiaScript + CodeMirror Live Editor
-
-This lesson shows how to integrate **CodeMirror 6** into LiaScript so learners can edit and run code interactively.
-
----
-
-## Live JavaScript Editor
-
-Below is a live CodeMirror editor.  
-Type your code and click **Run** to see the output.
+# CodeMirror in LiaScript (Working Example)
 
 ```html
 <div id="editor"></div>
 <button id="runBtn">Run</button>
 <pre id="output"></pre>
 
-<!-- Load CodeMirror 6 from CDN -->
-<script type="module">
-  import { EditorView, basicSetup } from "https://esm.sh/@codemirror/basic-setup";
-  import { javascript } from "https://esm.sh/@codemirror/lang-javascript";
-
-  // Initialize CodeMirror
-  const startState = EditorView.state({
-    doc: `console.log("Hello LiaScript + CodeMirror!");`,
-    extensions: [basicSetup, javascript()]
-  });
-
-  const view = new EditorView({
-    state: startState,
-    parent: document.getElementById("editor")
-  });
-
-  // Run button logic
-  document.getElementById("runBtn").addEventListener("click", () => {
-    const code = view.state.doc.toString();
-    try {
-      const result = eval(code); // Run JS code
-      document.getElementById("output").textContent =
-        (result !== undefined ? result : "") + "\n(See console for logs)";
-    } catch (err) {
-      document.getElementById("output").textContent = "Error: " + err.message;
-    }
-  });
-</script>
+<!-- Load CodeMirror from CDN (pre-bundled, no import) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.css">
+<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/javascript/javascript.js"></script>
 
 <style>
   #editor {
@@ -68,3 +28,26 @@ Type your code and click **Run** to see the output.
     min-height: 50px;
   }
 </style>
+
+<script>
+  setTimeout(() => {
+    // Initialize CodeMirror
+    const editor = CodeMirror(document.getElementById("editor"), {
+      value: 'console.log("Hello LiaScript + CodeMirror!");',
+      mode: "javascript",
+      lineNumbers: true
+    });
+
+    // Run button logic
+    document.getElementById("runBtn").addEventListener("click", () => {
+      const code = editor.getValue();
+      try {
+        const result = eval(code);
+        document.getElementById("output").textContent =
+          (result !== undefined ? result : "") + "\n(See console for logs)";
+      } catch (err) {
+        document.getElementById("output").textContent = "Error: " + err.message;
+      }
+    });
+  }, 500); // Delay to ensure DOM is ready
+</script>
