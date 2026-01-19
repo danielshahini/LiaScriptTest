@@ -31,16 +31,15 @@ language: en
   runBtn.addEventListener("click", () => {
     const code = view.state.doc.toString();
 
-    // Capture console.log
     const logs = [];
     const origLog = console.log;
     console.log = (...args) => logs.push(args.join(" "));
 
     try {
-      const result = (0, eval)(code); // run code
+      const result = (0, eval)(code);
       const resultText = result !== undefined ? String(result) + "\n" : "";
       output.textContent =
-        resultText + (logs.length ? logs.join("\n") + "\n" : "") + "(Executed)";
+        resultText + (logs.length ? logs.join("\n") + "\n" : "");
     } catch (err) {
       output.textContent = "Error: " + err.message;
     } finally {
@@ -70,3 +69,9 @@ language: en
 </style>
 @end
 -->
+
+# LiaScript + CodeMirror Live Editor
+
+Below is a live CodeMirror editor. Type code and click Run.
+
+@CodeMirrorJS(@uid)
