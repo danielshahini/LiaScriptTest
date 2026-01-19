@@ -1,11 +1,14 @@
-# CodeMirror in LiaScript (Working Example)
+# LiaScript + CodeMirror (Working in Player)
+
+Below is a live CodeMirror editor.  
+Type your code and click **Run** to see the output.
 
 ```html
 <div id="editor"></div>
 <button id="runBtn">Run</button>
 <pre id="output"></pre>
 
-<!-- Load CodeMirror from CDN (pre-bundled, no import) -->
+<!-- Load CodeMirror 5 (bundled JS/CSS) -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.css">
 <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/javascript/javascript.js"></script>
@@ -30,15 +33,14 @@
 </style>
 
 <script>
+  // Delay to ensure LiaScript has inserted the HTML
   setTimeout(() => {
-    // Initialize CodeMirror
     const editor = CodeMirror(document.getElementById("editor"), {
       value: 'console.log("Hello LiaScript + CodeMirror!");',
       mode: "javascript",
       lineNumbers: true
     });
 
-    // Run button logic
     document.getElementById("runBtn").addEventListener("click", () => {
       const code = editor.getValue();
       try {
@@ -49,5 +51,5 @@
         document.getElementById("output").textContent = "Error: " + err.message;
       }
     });
-  }, 500); // Delay to ensure DOM is ready
+  }, 500);
 </script>
