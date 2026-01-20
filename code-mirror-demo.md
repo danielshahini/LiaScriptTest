@@ -1,77 +1,33 @@
 <!--
-author: Your Name
-title: LiaScript + CodeMirror Demo
-version: 1.0.0
-language: en
+script: https://unpkg.com/@codemirror/basic-setup@latest/dist/index.global.js
+script: https://unpkg.com/@codemirror/lang-javascript@latest/dist/index.global.js
+link: https://codemirror.net/try/theme/one-dark.css
 
-@CodeMirrorJS
-<div id="editor-@0"></div>
-<button id="runBtn-@0">Run</button>
-<pre id="output-@0"></pre>
+@codemirror(@0):
+<div class="cm-wrapper" data-lang="@0"></div>
+<script>
+  const div = document.currentScript.previousElementSibling;
+  const lang = div.dataset.lang;
 
-<script type="module">
-  import { EditorView, basicSetup } from "https://esm.sh/@codemirror/basic-setup";
-  import { EditorState } from "https://esm.sh/@codemirror/state";
-  import { javascript } from "https://esm.sh/@codemirror/lang-javascript";
+  window.CodeMirrorSetup = window.CodeMirrorSetup || {};
 
-  const parent = document.getElementById("editor-@0");
-  const runBtn = document.getElementById("runBtn-@0");
-  const output = document.getElementById("output-@0");
+  const doc = "console.log('Hello from CodeMirror!');";
 
-  const startState = EditorState.create({
-    doc: `console.log("Hello LiaScript + CodeMirror!");`,
-    extensions: [basicSetup, javascript()]
-  });
+  const extensions = [
+    window.cm.basicSetup,
+    window.cm.javascript.javascript()
+  ];
 
-  const view = new EditorView({
-    state: startState,
-    parent
-  });
-
-  runBtn.addEventListener("click", () => {
-    const code = view.state.doc.toString();
-
-    const logs = [];
-    const origLog = console.log;
-    console.log = (...args) => logs.push(args.join(" "));
-
-    try {
-      const result = (0, eval)(code);
-      const resultText = result !== undefined ? String(result) + "\n" : "";
-      output.textContent =
-        resultText + (logs.length ? logs.join("\n") + "\n" : "");
-    } catch (err) {
-      output.textContent = "Error: " + err.message;
-    } finally {
-      console.log = origLog;
-    }
+  new window.cm.EditorView({
+    doc,
+    extensions,
+    parent: div
   });
 </script>
-
-<style>
-  #editor-@0 {
-    border: 1px solid #ccc;
-    font-size: 14px;
-    height: 200px;
-    margin-bottom: 10px;
-  }
-  #runBtn-@0 {
-    padding: 5px 10px;
-    margin-bottom: 10px;
-  }
-  #output-@0 {
-    background: #f4f4f4;
-    padding: 10px;
-    border: 1px solid #ccc;
-    min-height: 50px;
-    white-space: pre-wrap;
-  }
-</style>
-@end
 -->
 
-# LiaScript + CodeMirror Live Editor
+# 👋 CodeMirror Embedded in LiaScript
 
-Below is a live CodeMirror editor. Type code and click Run.
+This is a live editor:
 
-@CodeMirrorJS(@uid)
+@codemirror(js)
