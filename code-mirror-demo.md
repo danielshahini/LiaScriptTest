@@ -28,3 +28,5 @@ link: https://codemirror.net/try/theme/one-dark.css
 
 # Macro Definition for CodeMirror
 This file defines the `@codemirror(lang)` macro for embedding a live editor.
+
+@codemirror(js)
