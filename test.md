@@ -6,5 +6,4 @@ import: https://raw.githubusercontent.com/danielshahini/LiaScriptTest/refs/heads
 
 Try editing JavaScript live here:
 
-
 @codemirror(js)
