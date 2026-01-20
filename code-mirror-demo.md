@@ -26,8 +26,3 @@ link: https://codemirror.net/try/theme/one-dark.css
 </script>
 -->
 
-# 👋 CodeMirror Embedded in LiaScript
-
-This is a live editor:
-
-@codemirror(js)
