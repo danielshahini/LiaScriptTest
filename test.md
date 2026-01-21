@@ -1,9 +1,11 @@
 <!--
-import: https://raw.githubusercontent.com/danielshahini/LiaScriptTest/refs/heads/master/code-mirror-demo.md
+@TA
+<textarea style="width: 100%; min-height: 160px;">Hello from textarea</textarea>
+@end
 -->
 
-# 👩‍💻 My Course with Embedded CodeMirror
+# Test page
 
-Try editing JavaScript live here:
+If you see a textarea below, macros are working.
 
-@codemirror(js)
+@TA
