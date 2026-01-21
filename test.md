@@ -1,8 +1,3 @@
-<!--
-link: https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css
-script: https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js
-script: https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js
-
 @CM._editor
 <div id="cm-wrap-@0" style="border: 1px solid #ddd; padding: 8px; border-radius: 6px;">
 
@@ -11,24 +6,19 @@ script: https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascrip
     <button id="cm-clear-@0" style="margin-left: 6px;">Clear output</button>
   </div>
 
-  <!-- Two-column layout -->
-  <div style="
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    align-items: start;
-  ">
+  <!-- FLEX ROW -->
+  <div style="display:flex; gap:12px; align-items:stretch; width:100%;">
 
-    <!-- Left: Editor -->
-    <div>
+    <!-- LEFT: Editor -->
+    <div style="flex:1 1 0; min-width:0;">
       <div style="margin: 6px 0; font-weight: 600;">Code</div>
       <textarea id="cm-src-@0" style="width: 100%; min-height: 220px;">console.log("Hello from CodeMirror");</textarea>
     </div>
 
-    <!-- Right: Output -->
-    <div>
+    <!-- RIGHT: Output -->
+    <div style="flex:1 1 0; min-width:0;">
       <div style="margin: 6px 0; font-weight: 600;">Output</div>
-      <pre id="cm-out-@0" style="white-space: pre-wrap; border: 1px solid #eee; padding: 8px; min-height: 220px; background: #fafafa;"></pre>
+      <pre id="cm-out-@0" style="white-space: pre-wrap; border: 1px solid #eee; padding: 8px; min-height: 220px; background: #fafafa; margin:0;"></pre>
     </div>
 
   </div>
@@ -47,17 +37,15 @@ script: https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascrip
 
   var editor = CodeMirror.fromTextArea(textarea, {
     lineNumbers: true,
-    mode: "javascript",
-    viewportMargin: Infinity
+    mode: "javascript"
   });
 
-  function append(line) {
-    outEl.textContent += line + "\n";
-  }
+  // Make sure CodeMirror doesn't force layout weirdness
+  editor.setSize("100%", 220);
 
-  clearBtn.addEventListener("click", function () {
-    outEl.textContent = "";
-  });
+  function append(line) { outEl.textContent += line + "\n"; }
+
+  clearBtn.addEventListener("click", function () { outEl.textContent = ""; });
 
   runBtn.addEventListener("click", function () {
     outEl.textContent = "";
@@ -82,11 +70,6 @@ script: https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascrip
 </script>
 @end
 
-@CM: @CM._editor(@uid)
--->
-
-
-
-# CodeMirror test
+# Test
 
 @CM
