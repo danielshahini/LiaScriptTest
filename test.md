@@ -1,26 +1,38 @@
-@CM._editor
-<div id="cm-wrap-@0" style="border: 1px solid #ddd; padding: 8px; border-radius: 6px;">
+<!--
+link: https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css
+script: https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js
+script: https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js
 
-  <div style="margin-bottom: 8px;">
+@CM._editor
+<div id="cm-wrap-@0" style="border:1px solid #ddd; padding:8px; border-radius:6px;">
+
+  <div style="margin-bottom:8px;">
     <button id="cm-run-@0">Run</button>
-    <button id="cm-clear-@0" style="margin-left: 6px;">Clear output</button>
+    <button id="cm-clear-@0" style="margin-left:6px;">Clear output</button>
   </div>
 
-  <!-- FLEX ROW -->
-  <div style="display:flex; gap:12px; align-items:stretch; width:100%;">
+  <!-- Force horizontal layout -->
+  <div style="overflow-x:auto;">
+    <div style="
+      display:flex;
+      flex-wrap:nowrap;          /* do not wrap to next line */
+      gap:12px;
+      align-items:stretch;
+      width:max-content;          /* allow row to be wider than container */
+      min-width:100%;             /* but fill container when possible */
+    ">
 
-    <!-- LEFT: Editor -->
-    <div style="flex:1 1 0; min-width:0;">
-      <div style="margin: 6px 0; font-weight: 600;">Code</div>
-      <textarea id="cm-src-@0" style="width: 100%; min-height: 220px;">console.log("Hello from CodeMirror");</textarea>
+      <div style="flex:0 0 520px; min-width:520px;">
+        <div style="margin:6px 0; font-weight:600;">Code</div>
+        <textarea id="cm-src-@0" style="width:100%; min-height:260px;">console.log("Hello from CodeMirror");</textarea>
+      </div>
+
+      <div style="flex:0 0 520px; min-width:520px;">
+        <div style="margin:6px 0; font-weight:600;">Output</div>
+        <pre id="cm-out-@0" style="white-space:pre-wrap; border:1px solid #eee; padding:8px; min-height:260px; background:#fafafa; margin:0;"></pre>
+      </div>
+
     </div>
-
-    <!-- RIGHT: Output -->
-    <div style="flex:1 1 0; min-width:0;">
-      <div style="margin: 6px 0; font-weight: 600;">Output</div>
-      <pre id="cm-out-@0" style="white-space: pre-wrap; border: 1px solid #eee; padding: 8px; min-height: 220px; background: #fafafa; margin:0;"></pre>
-    </div>
-
   </div>
 </div>
 
@@ -40,11 +52,9 @@
     mode: "javascript"
   });
 
-  // Make sure CodeMirror doesn't force layout weirdness
-  editor.setSize("100%", 220);
+  editor.setSize("100%", 260);
 
   function append(line) { outEl.textContent += line + "\n"; }
-
   clearBtn.addEventListener("click", function () { outEl.textContent = ""; });
 
   runBtn.addEventListener("click", function () {
@@ -70,6 +80,10 @@
 </script>
 @end
 
-# Tests
+@CM: @CM._editor(@uid)
+-->
+
+
+# Testss
 
 @CM
