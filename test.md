@@ -70,6 +70,6 @@
 </script>
 @end
 
-# Test
+# Tests
 
 @CM
